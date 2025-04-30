@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition</title>
+</head>
+<body>
+    <h1>Emotion Recognition</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="image">Upload an Image:</label>
+        <input type="file" name="image" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if img_original and img_with_box and img_face %}
+        <h2>Predicted Emotion: {{ emotion }}</h2>
+        <h3>Emotion Probabilities:</h3>
+        <ul>
+            {% for emotion, probability in emotion_probabilities %}
+                <li>{{ emotion }}: {{ '%.2f' % (probability * 100) }}%</li>
+            {% endfor %}
+        </ul>
+        <h3>1. Original Image:</h3>
+        <img src="data:image/jpeg;base64,{{ img_original }}" alt="Original Image" style="max-width: 300px;"><br>
+
+        <h3 style="font-size: 30px; margin: 5px;">↓</h3>
+
+        <h3>2. Image with Detected Face:</h3>
+        <img src="data:image/jpeg;base64,{{ img_with_box }}" alt="Image with Face" style="max-width: 300px;"><br>
+
+        <h3 style="font-size: 30px; margin: 5px;">↓</h3>
+
+        <h3>3. Cropped Face:</h3>
+        <img src="data:image/jpeg;base64,{{ img_face }}" alt="Face Only" style="max-width: 300px;"><br>
+    {% endif %}
+
+
+</body>
+</html>
